@@ -294,8 +294,12 @@ def main():
             split=f"train[{data_args.validation_split_percentage}%:]",
             cache_dir=model_args.cache_dir,
             token=model_args.token
-        )    
-    tokenized_datasets = raw_datasets
+        ) 
+    def tokenize_function(examples):
+        return tokenizer(examples["CombinedText"])
+
+    tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
+    #tokenized_datasets = raw_datasets
 
     config_kwargs = {
         "cache_dir": model_args.cache_dir,
