@@ -207,10 +207,7 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "The number of processes to use for the preprocessing."},
     )
-    remove_unused_columns: bool = field(
-        default=False, metadata={"help": "remove_unused_columns"}
-    )
-
+    
     def __post_init__(self):
         if self.dataset_name is None:
             raise ValueError("Need either a dataset name.")
