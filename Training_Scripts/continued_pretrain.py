@@ -302,7 +302,7 @@ def main():
         )
 
     def tokenize_function(examples):
-        return tokenizer(examples["CombinedText"])
+        return tokenizer(examples["CombinedText"], padding="max_length", truncation=True, max_length=4096)
 
     tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
     #tokenized_datasets = raw_datasets
