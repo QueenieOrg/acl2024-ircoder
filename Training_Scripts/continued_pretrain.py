@@ -295,6 +295,15 @@ def main():
             cache_dir=model_args.cache_dir,
             token=model_args.token
         ) 
+
+    if model_args.model_name_or_path:
+        tokenizer = TOKENIZER_MAP[model_args.model_name_or_path]
+    else:
+        raise ValueError(
+            "You are instantiating a new tokenizer from scratch. This is not supported by this script. "
+            "You can do it from another script, save it, and load it from here, using --tokenizer_name."
+        )
+
     def tokenize_function(examples):
         return tokenizer(examples["CombinedText"])
 
@@ -318,14 +327,6 @@ def main():
             logger.info(f"Overriding config: {model_args.config_overrides}")
             config.update_from_string(model_args.config_overrides)
             logger.info(f"New config: {config}")
-
-    if model_args.model_name_or_path:
-        tokenizer = TOKENIZER_MAP[model_args.model_name_or_path]
-    else:
-        raise ValueError(
-            "You are instantiating a new tokenizer from scratch. This is not supported by this script. "
-            "You can do it from another script, save it, and load it from here, using --tokenizer_name."
-        )
 
     torch_dtype = (
         model_args.torch_dtype
