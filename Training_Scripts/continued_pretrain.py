@@ -301,18 +301,8 @@ def main():
             "You can do it from another script, save it, and load it from here, using --tokenizer_name."
         )
 
-    def tokenize_function(examples):
-    # Tokenize with left-side padding, truncation, and a max length of 4096 tokens
-        tokenized_inputs = tokenizer(examples["CombinedText"], padding="max_length", truncation=True, max_length=4096)
-    
-    # For causal language modeling (autoregressive), the labels are the same as input_ids
-        tokenized_inputs["labels"] = tokenized_inputs["input_ids"].copy()
-    
-        return tokenized_inputs
 
-
-    tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
-    #tokenized_datasets = raw_datasets
+    tokenized_datasets = raw_datasets
 
     config_kwargs = {
         "cache_dir": model_args.cache_dir,
